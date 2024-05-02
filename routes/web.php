@@ -1,5 +1,7 @@
 <?php
 use App\Http\Controllers\CrudUserController;
+use App\Http\Controllers\FavoritiesController;
+use App\Http\Controllers\ContentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +31,11 @@ Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.dele
 Route::get('update', [CrudUserController::class, 'updateUser'])->name('user.updateUser');
 Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('user.postUpdateUser');
 
-Route::get('list', [CrudUserController::class, 'listUser'])->name('user.listdanhsach');
+Route::get('list', [CrudUserController::class, 'listUser'])->name('user.list');
 
-//Route::get('listdanhsach', [CrudUserController::class, 'listDanhSach'])->name('user.listdanhsach');
+Route::get('listdanhsach', [FavoritiesController::class, 'listdanhsach'])->name('sothich.listdanhsach');
+
+Route::get('listbaiviet', [ContentController::class, 'listbaiviet'])->name('content.listbaiviet');
 
 Route::get('signOut', [CrudUserController::class, 'signOut'])->name('signout');
 Route::get('hacker/xss',[CrudUserController::class,'xss'])->name('xss');
