@@ -29,10 +29,12 @@ Route::get('delete', [CrudUserController::class, 'deleteUser'])->name('user.dele
 Route::get('update', [CrudUserController::class, 'updateUser'])->name('user.updateUser');
 Route::post('update', [CrudUserController::class, 'postUpdateUser'])->name('user.postUpdateUser');
 
-Route::get('list', [CrudUserController::class, 'listUser'])->name('user.list');
+Route::get('list', [CrudUserController::class, 'listUser'])->name('user.listdanhsach');
+
+//Route::get('listdanhsach', [CrudUserController::class, 'listDanhSach'])->name('user.listdanhsach');
 
 Route::get('signOut', [CrudUserController::class, 'signOut'])->name('signout');
-
+Route::get('hacker/xss',[CrudUserController::class,'xss'])->name('xss');
 Route::get('/', function () {
     return view('welcome');
 });
