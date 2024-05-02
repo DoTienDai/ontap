@@ -23,6 +23,7 @@
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
                                 </div>
+                               
                                 <div class="form-group mb-3">
                                     <div class="checkbox">
                                         <label>
