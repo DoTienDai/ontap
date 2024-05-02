@@ -18,6 +18,13 @@
                                     @endif
                                 </div>
                                 <div class="form-group mb-3">
+                                    <input type="text" placeholder="So thich" id="mssv" class="form-control" name="mssv"
+                                           required autofocus>
+                                    @if ($errors->has('mssv'))
+                                        <span class="text-danger">{{ $errors->first('mssv')}}</span>
+                                    @endif
+                                </div>
+                                <div class="form-group mb-3">
                                     <input type="text" placeholder="Email" id="email_address" class="form-control"
                                            name="email" required autofocus>
                                     @if ($errors->has('email'))
@@ -30,6 +37,8 @@
                                     @if ($errors->has('password'))
                                         <span class="text-danger">{{ $errors->first('password') }}</span>
                                     @endif
+                                </div>
+                            
                                 </div>
                                 <div class="d-grid mx-auto">
                                     <button type="submit" class="btn btn-dark btn-block">Dang ky</button>
