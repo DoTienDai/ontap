@@ -7,7 +7,9 @@ use Session;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Favorities;
+use App\Models\Posts;
+use App\Models\Profile;
 /**
  * CRUD User controller
  */
@@ -77,21 +79,52 @@ class CrudUserController extends Controller
     /**
      * View user detail page
      */
-    public function readUser(Request $request) {
+   public function readUser(Request $request)
+    {
         $user_id = $request->get('id');
         $user = User::find($user_id);
+        if (!$user) {
+            return redirect("list")->withError('Người dùng không tồn tại');
+        }
+        // truy vấn tìm bài viết của người dùng
+        $user_profile = Profile::where('user_id', $user_id)->first();
+        if (!$user_profile) {
+            return redirect("list")->withError('người dùng không có bài viết');
+        }
+        //tim xem nguoi dung có sở thích không
+        $sothich = DB::table('user_favorite')->where('user_id', $user_id)->first();
+        if (!$sothich) {
+            return redirect("list")->withError('người dùng khong có sở thích');
+        }
+        
+        // lấy id sở thích
+        $favorite_id = $sothich->favorite_id;
+        
+        //truy vấn dựa vài id sở thích tìm sở thích người dùng
+        $tenst = Favorities::where('favorite_id', $favorite_id)->get();
 
-        return view('crud_user.read', ['messi' => $user]);
+        //truy vấn tìm bà viết của người dùng
+        $user_posts = Posts::where('user_id', $user_id)->get();
+
+        return view('crud_user.readF', ['messi' => $user_profile, 'posts' => $user_posts, 'st' => $tenst]);
     }
-
     /**
      * Delete user by id
      */
     public function deleteUser(Request $request) {
         $user_id = $request->get('id');
-        $user = User::destroy($user_id);
+        $posts = Posts::where('user_id', $user_id)->count();
+        if ($posts > 0) {
+            return redirect("list")->withError('Người dùng đã có bài đăng, không thể xóa');
+        }
 
-        return redirect("list")->withSuccess('You have signed-in');
+        $nguoidung = User::find($user_id);
+        $sothich = Favorities::find($nguoidung);
+        if ($sothich == $nguoidung) {
+            return redirect("list")->withError('Người dùng có sở thích, không thể xóa');
+        }
+        $user = User::destroy($user_id);
+        return redirect("list")->withSuccess('xóa thành công');
     }
 
     /**
