@@ -35,6 +35,15 @@
                                     @endif
                                 </div>
 
+                                <div class="form-group mb-3">
+                                    <input type="text" placeholder="So thich" id="mssv" class="form-control" name="mssv"
+                                           value="{{ $user->mssv }}"
+                                           required autofocus>
+                                    @if ($errors->has('mssv'))
+                                        <span class="text-danger">{{ $errors->first('mssv') }}</span>
+                                    @endif
+                                </div>
+
                                 <div class="d-grid mx-auto">
                                     <button type="submit" class="btn btn-dark btn-block">Update</button>
                                 </div>
