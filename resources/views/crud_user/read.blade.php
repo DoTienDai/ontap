@@ -10,6 +10,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>So thich</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -17,6 +18,7 @@
                             <td>{{$messi->id}}</td>
                             <td>{{$messi->name}}</td>
                             <td>{{$messi->email}}</td>
+                            <td>{{$messi->mssv}}</td>
                         </tr>
                     </tbody>
                 </table>
