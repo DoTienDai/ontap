@@ -37,7 +37,7 @@
                     </li>
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('signout') }}">| Thoat</a>
+                        <a class="nav-link" href="{{ route('signout') }}">Thoat</a>
                     </li>
                 @endguest
             </ul>
